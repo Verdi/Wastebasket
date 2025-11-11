@@ -1,55 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Wastebasket App</title>
-	<style>
-    :root {
-        --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    }
-
-    body {
-        font-family: var(--system-ui);
-        color: #1E1E1E;
-        background-color: #F8F8F8;
-    }
-    main {
-        width: 90vw;
-        margin: auto;
-    }
-    header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    #title {
-        font-size: 4rem;
-        margin-bottom: 0;
-    }
-    #icon {
-        width: 200px;
-        margin: auto;
-        display: block;
-    }
-
-
-    </style>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wastebasket</title>
+  <link rel="stylesheet" href="wastebasket-styles.css">
 </head>
 <body>
-    <main>
-        <header>
-            <h1 id="title">Wastebasket</h1>
-            <p>Write like nobody's reading.</p>
-        </header>
-	
-        <section>
-            <img id="icon" src="wastebasket.png">
-        </section>
+  <main class="workspace">
+    <section class="typewriter" aria-live="off">
+      <div class="custom-caret" aria-hidden="true"></div>
+      <textarea
+        id="typeInput"
+        rows="4"
+        placeholder="Write the fucking words down"
+        aria-label="Plain text writing surface"
+        aria-autocomplete="none"
+        aria-live="off"
+        lang="zxx"
+        spellcheck="false"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="off"
+        inputmode="text"
+        data-gramm="false"
+        data-enable-grammarly="false"
+        data-ms-editor="false"
+        translate="no"
+      ></textarea>
+    </section>
 
-	</main>
-	
-	<footer>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </main>
 
-	</footer>
+  <nav class="toolbar" aria-label="Writing actions">
+    <button id="tossBtn" type="button" class="secondary">Toss</button>
+    <button id="copyBtn" type="button">Copy</button>
+    <button id="saveBtn" type="button" class="secondary">Save</button>
+    <button id="fullscreenBtn" type="button" aria-pressed="false">Fullscreen</button>
+  </nav>
+
+  <script src="wastebasket-app.js" defer></script>
 </body>
 </html>
