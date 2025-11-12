@@ -258,13 +258,14 @@
     }
     const active = Boolean(document.fullscreenElement);
     fullscreenBtn.setAttribute('aria-pressed', String(active));
+    fullscreenBtn.setAttribute('aria-label', active ? 'Exit' : 'Fullscreen');
     const enterIcon = fullscreenBtn.querySelector('[data-icon="enter"]');
     const exitIcon = fullscreenBtn.querySelector('[data-icon="exit"]');
     if (enterIcon && exitIcon) {
       enterIcon.hidden = active;
       exitIcon.hidden = !active;
     }
-    const label = fullscreenBtn.querySelector('.toolbar-action__label');
+    const label = fullscreenBtn.parentElement?.querySelector('[data-fullscreen-label]');
     if (label) {
       label.textContent = active ? 'Exit' : 'Fullscreen';
     }

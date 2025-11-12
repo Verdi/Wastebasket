@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wastebasket</title>
+  <link rel="icon" href="wastebasket-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="wastebasket-512.png" sizes="512x512">
   <link rel="stylesheet" href="wastebasket-styles.css">
 </head>
 <body>
@@ -34,18 +36,18 @@
 
   <nav class="toolbar" aria-label="Writing actions">
     <div class="toolbar-item">
-      <button id="tossBtn" type="button" class="toolbar-action">
+      <button id="tossBtn" type="button" class="toolbar-action" aria-label="Toss">
         <span class="toolbar-action__icon" aria-hidden="true">
           <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M24.457 4C25.689 4 26.796 4.75349 27.248 5.89941L27.8164 7.34082C27.9781 7.75118 28.0477 8.19264 28.0195 8.63281L26.9365 25.5166C26.8352 27.0956 25.5246 28.3242 23.9424 28.3242H7.94434C6.3543 28.3241 5.04029 27.0835 4.94922 25.4961L3.97852 8.58105C3.95579 8.18409 4.01226 7.7861 4.14453 7.41113L4.6416 6.00195C5.06481 4.80252 6.19881 4.00017 7.4707 4H24.457ZM25.918 10.1367C25.4802 10.3906 24.9692 10.5381 24.416 10.5381H7.50488C6.98098 10.538 6.49536 10.4048 6.07324 10.1748L6.94629 25.3818C6.97672 25.9109 7.41443 26.3241 7.94434 26.3242H23.9424C24.4697 26.3242 24.9065 25.9149 24.9404 25.3887L25.918 10.1367ZM7.63672 6.01562C7.1785 6.01577 6.77777 6.32807 6.66602 6.77246L6.53516 7.29492C6.37658 7.92622 6.85404 8.53785 7.50488 8.53809H24.416C25.0728 8.53809 25.5516 7.91595 25.3828 7.28125L25.2432 6.75879C25.1265 6.32108 24.7303 6.01579 24.2773 6.01562H7.63672Z" fill="currentColor"/>
           </svg>
         </span>
-        <span class="toolbar-action__label">Toss</span>
       </button>
+      <span class="toolbar-label">Toss</span>
     </div>
 
     <div class="toolbar-item toolbar-item--copy">
-      <button id="copyBtn" type="button" class="toolbar-action">
+           <button id="copyBtn" type="button" class="toolbar-action" aria-label="Copy">
         <span class="toolbar-action__icon" aria-hidden="true">
           <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_263_681)">
@@ -58,13 +60,14 @@
             </defs>
           </svg>
         </span>
-        <span class="toolbar-action__label">Copy</span>
+        </span>
       </button>
+      <span class="toolbar-label">Copy</span>
       <div class="status" id="status" role="status" aria-live="polite"></div>
     </div>
 
     <div class="toolbar-item">
-      <button id="saveBtn" type="button" class="toolbar-action">
+      <button id="saveBtn" type="button" class="toolbar-action" aria-label="Save">
         <span class="toolbar-action__icon" aria-hidden="true">
           <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_263_696)">
@@ -78,8 +81,9 @@
             </defs>
           </svg>
         </span>
-        <span class="toolbar-action__label">Save</span>
+        </span>
       </button>
+      <span class="toolbar-label">Save</span>
     </div>
 
     <div class="toolbar-item">
@@ -114,12 +118,13 @@
             </defs>
           </svg>
         </span>
-        <span class="toolbar-action__label">Fullscreen</span>
+        </span>
       </button>
+      <span class="toolbar-label" data-fullscreen-label>Fullscreen</span>
     </div>
 
     <div class="toolbar-item">
-      <a class="toolbar-action toolbar-action--link" href="/settings">
+      <a class="toolbar-action toolbar-action--link" href="/settings" aria-label="Settings">
         <span class="toolbar-action__icon" aria-hidden="true">
           <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_263_757)">
@@ -134,12 +139,13 @@
             </defs>
           </svg>
         </span>
-        <span class="toolbar-action__label">Settings</span>
+        </span>
       </a>
+      <span class="toolbar-label">Settings</span>
     </div>
 
     <div class="toolbar-item">
-      <a class="toolbar-action toolbar-action--link" href="/wtf">
+      <a class="toolbar-action toolbar-action--link" href="/wtf" aria-label="WTF">
         <span class="toolbar-action__icon" aria-hidden="true">
           <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_263_780)">
@@ -154,8 +160,9 @@
             </defs>
           </svg>
         </span>
-        <span class="toolbar-action__label">WTF</span>
+        </span>
       </a>
+      <span class="toolbar-label">WTF</span>
     </div>
   </nav>
 
