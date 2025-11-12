@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wastebasket</title>
   <link rel="icon" href="wastebasket-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="wastebasket-512.png" sizes="512x512">
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('wastebasket:theme');
+        if (!storedTheme) {
+          return;
+        }
+        document.documentElement.dataset.theme = storedTheme;
+        document.addEventListener('DOMContentLoaded', function () {
+          if (document.body) {
+            document.body.dataset.theme = storedTheme;
+          }
+        });
+      } catch (error) {
+        /* localStorage unavailable */
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="wastebasket-styles.css">
 </head>
-<body data-writing-font="mono">
+<body data-theme="auto" data-writing-font="mono">
   <main class="workspace">
     <section class="typewriter" aria-live="off">
       <div class="custom-caret" aria-hidden="true"></div>

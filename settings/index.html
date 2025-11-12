@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wastebasket - Settings</title>
   <link rel="icon" href="../wastebasket-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="../wastebasket-512.png" sizes="512x512">
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('wastebasket:theme');
+        if (!storedTheme) {
+          return;
+        }
+        document.documentElement.dataset.theme = storedTheme;
+        document.addEventListener('DOMContentLoaded', function () {
+          if (document.body) {
+            document.body.dataset.theme = storedTheme;
+          }
+        });
+      } catch (error) {
+        /* localStorage unavailable */
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="../wastebasket-styles.css">
 </head>
-<body data-writing-font="mono">
+<body data-theme="auto" data-writing-font="mono">
   <main class="settings">
     <div class="settings__layout">
       <aside class="settings__sidebar" aria-label="Page navigation">
@@ -36,7 +54,7 @@
           <h1>Settings</h1>
         </div>
         <section aria-labelledby="font-settings-heading">
-          <h2 id="font-settings-heading">Font</h2>
+          <h2 id="font-settings-heading" class="settings__section-title">Font</h2>
           <form data-font-form>
             <fieldset>
               <legend class="sr-only">Writing font</legend>
@@ -66,6 +84,38 @@
                       <span class="font-option__name">Serif</span>
                       <span class="writing-sample" data-writing-font="serif">All work and no play makes Jack a dull boy</span>
                     </span>
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </section>
+
+        <section aria-labelledby="theme-settings-heading">
+          <h2 id="theme-settings-heading" class="settings__section-title">Theme</h2>
+          <form data-theme-form>
+            <fieldset>
+              <legend class="sr-only">Theme</legend>
+              <ul class="theme-options">
+                <li class="theme-option">
+                  <input type="radio" name="theme" id="theme-option-auto" value="auto" checked>
+                  <label class="theme-option__card" for="theme-option-auto">
+                    <span class="theme-option__preview theme-option__preview--auto" aria-hidden="true"></span>
+                    <span class="theme-option__name">Auto</span>
+                  </label>
+                </li>
+                <li class="theme-option">
+                  <input type="radio" name="theme" id="theme-option-light" value="light">
+                  <label class="theme-option__card" for="theme-option-light">
+                    <span class="theme-option__preview theme-option__preview--light" aria-hidden="true"></span>
+                    <span class="theme-option__name">Light</span>
+                  </label>
+                </li>
+                <li class="theme-option">
+                  <input type="radio" name="theme" id="theme-option-dark" value="dark">
+                  <label class="theme-option__card" for="theme-option-dark">
+                    <span class="theme-option__preview theme-option__preview--dark" aria-hidden="true"></span>
+                    <span class="theme-option__name">Dark</span>
                   </label>
                 </li>
               </ul>

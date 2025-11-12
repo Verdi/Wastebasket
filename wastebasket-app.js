@@ -1,8 +1,11 @@
 (() => {
   const STORAGE_KEY = 'wastebasket:entry';
   const FONT_STORAGE_KEY = 'wastebasket:font';
+  const THEME_STORAGE_KEY = 'wastebasket:theme';
   const DEFAULT_WRITING_FONT = 'mono';
   const WRITING_FONTS = new Set(['sans', 'serif', 'mono']);
+  const DEFAULT_THEME = 'auto';
+  const THEME_OPTIONS = new Set(['auto', 'light', 'dark']);
 
   const textarea = document.getElementById('typeInput');
   const tossBtn = document.getElementById('tossBtn');
@@ -28,6 +31,7 @@
     }
   })();
 
+  applyThemePreference(getStoredThemePreference());
   setWritingFontOnBody(getStoredWritingFont());
 
   if (supportsLocalStorage) {
@@ -162,11 +166,16 @@
   window.addEventListener('storage', (event) => {
     if (event.key === FONT_STORAGE_KEY) {
       handleExternalFontChange(event.newValue);
+      return;
+    }
+    if (event.key === THEME_STORAGE_KEY) {
+      handleExternalThemeChange(event.newValue);
     }
   });
 
   window.addEventListener('pageshow', () => {
     handleExternalFontChange(getStoredWritingFont());
+    handleExternalThemeChange(getStoredThemePreference());
   });
 
   focusInput();
@@ -458,12 +467,33 @@
     updateCaretPosition();
   }
 
+  function handleExternalThemeChange(nextTheme) {
+    const previousTheme = document.documentElement?.dataset.theme;
+    applyThemePreference(isValidThemeValue(nextTheme) ? nextTheme : DEFAULT_THEME);
+    const currentTheme = document.documentElement?.dataset.theme;
+    if (previousTheme === currentTheme) {
+      return;
+    }
+    syncMirrorTypography(textMirror);
+    syncCaretMirrorDimensions();
+    lockViewport();
+    updateCaretPosition();
+  }
+
   function getStoredWritingFont() {
     if (!supportsLocalStorage) {
       return DEFAULT_WRITING_FONT;
     }
     const stored = localStorage.getItem(FONT_STORAGE_KEY);
     return isValidFontValue(stored) ? stored : DEFAULT_WRITING_FONT;
+  }
+
+  function getStoredThemePreference() {
+    if (!supportsLocalStorage) {
+      return DEFAULT_THEME;
+    }
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    return isValidThemeValue(stored) ? stored : DEFAULT_THEME;
   }
 
   function setWritingFontOnBody(fontValue) {
@@ -476,8 +506,22 @@
       : DEFAULT_WRITING_FONT;
   }
 
+  function applyThemePreference(themeValue) {
+    const nextTheme = isValidThemeValue(themeValue) ? themeValue : DEFAULT_THEME;
+    if (document.documentElement) {
+      document.documentElement.dataset.theme = nextTheme;
+    }
+    if (document.body) {
+      document.body.dataset.theme = nextTheme;
+    }
+  }
+
   function isValidFontValue(value) {
     return typeof value === 'string' && WRITING_FONTS.has(value);
+  }
+
+  function isValidThemeValue(value) {
+    return typeof value === 'string' && THEME_OPTIONS.has(value);
   }
 
   function escapeHtml(input) {
