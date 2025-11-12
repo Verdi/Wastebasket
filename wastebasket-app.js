@@ -1,5 +1,8 @@
 (() => {
   const STORAGE_KEY = 'wastebasket:entry';
+  const FONT_STORAGE_KEY = 'wastebasket:font';
+  const DEFAULT_WRITING_FONT = 'mono';
+  const WRITING_FONTS = new Set(['sans', 'serif', 'mono']);
 
   const textarea = document.getElementById('typeInput');
   const tossBtn = document.getElementById('tossBtn');
@@ -24,6 +27,8 @@
       return false;
     }
   })();
+
+  setWritingFontOnBody(getStoredWritingFont());
 
   if (supportsLocalStorage) {
     text = localStorage.getItem(STORAGE_KEY) || '';
@@ -152,6 +157,16 @@
     syncCaretMirrorDimensions();
     lockViewport();
     updateCaretPosition();
+  });
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === FONT_STORAGE_KEY) {
+      handleExternalFontChange(event.newValue);
+    }
+  });
+
+  window.addEventListener('pageshow', () => {
+    handleExternalFontChange(getStoredWritingFont());
   });
 
   focusInput();
@@ -429,6 +444,40 @@
       left: textarea.offsetLeft + caretLeft - textarea.scrollLeft,
       height: lineHeight
     };
+  }
+
+  function handleExternalFontChange(nextFont) {
+    const targetFont = isValidFontValue(nextFont) ? nextFont : DEFAULT_WRITING_FONT;
+    if (document.body?.dataset.writingFont === targetFont) {
+      return;
+    }
+    setWritingFontOnBody(targetFont);
+    syncMirrorTypography(textMirror);
+    syncCaretMirrorDimensions();
+    lockViewport();
+    updateCaretPosition();
+  }
+
+  function getStoredWritingFont() {
+    if (!supportsLocalStorage) {
+      return DEFAULT_WRITING_FONT;
+    }
+    const stored = localStorage.getItem(FONT_STORAGE_KEY);
+    return isValidFontValue(stored) ? stored : DEFAULT_WRITING_FONT;
+  }
+
+  function setWritingFontOnBody(fontValue) {
+    const body = document.body;
+    if (!body) {
+      return;
+    }
+    body.dataset.writingFont = isValidFontValue(fontValue)
+      ? fontValue
+      : DEFAULT_WRITING_FONT;
+  }
+
+  function isValidFontValue(value) {
+    return typeof value === 'string' && WRITING_FONTS.has(value);
   }
 
   function escapeHtml(input) {
