@@ -8,7 +8,73 @@
   <link rel="apple-touch-icon" href="../wastebasket-512.png" sizes="512x512">
   <link rel="stylesheet" href="../wastebasket-styles.css">
 </head>
-<body>
-    <h1>Wastebasket Settings</h1>
+<body data-writing-font="mono">
+  <main class="settings">
+    <div class="settings__layout">
+      <aside class="settings__sidebar" aria-label="Page navigation">
+        <div class="toolbar-item toolbar-item--back">
+          <a class="toolbar-action" href="../index.html" aria-label="Back to writing surface">
+            <span class="toolbar-action__icon" aria-hidden="true">
+              <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_335_836)">
+                  <path d="M21.1699 28.3243C21.0383 28.325 20.9078 28.2995 20.786 28.249C20.6641 28.1986 20.5533 28.1243 20.4599 28.0303L12.2899 19.75C11.8243 19.2793 11.4548 18.72 11.2028 18.1044C10.9507 17.4887 10.8209 16.8287 10.8209 16.1622C10.8209 15.4956 10.9507 14.8356 11.2028 14.2199C11.4548 13.6043 11.8243 13.0451 12.2899 12.5743L20.4599 4.29399C20.5531 4.19949 20.6638 4.12453 20.7856 4.07339C20.9075 4.02225 21.038 3.99593 21.1699 3.99593C21.3017 3.99593 21.4323 4.02225 21.5541 4.07339C21.676 4.12453 21.7866 4.19949 21.8799 4.29399C21.9731 4.38849 22.0471 4.50067 22.0975 4.62414C22.148 4.74761 22.174 4.87994 22.174 5.01358C22.174 5.14722 22.148 5.27955 22.0975 5.40302C22.0471 5.52649 21.9731 5.63867 21.8799 5.73317L13.7099 14.0135C13.1481 14.5836 12.8325 15.3564 12.8325 16.1622C12.8325 16.9679 13.1481 17.7407 13.7099 18.3108L21.8799 26.5912C21.9736 26.6854 22.048 26.7975 22.0988 26.921C22.1495 27.0445 22.1757 27.177 22.1757 27.3108C22.1757 27.4446 22.1495 27.577 22.0988 27.7005C22.048 27.824 21.9736 27.9361 21.8799 28.0303C21.7864 28.1243 21.6756 28.1986 21.5538 28.249C21.432 28.2995 21.3015 28.325 21.1699 28.3243Z" fill="currentColor"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_335_836">
+                    <rect width="24" height="24.3242" fill="none" transform="translate(4 4)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </span>
+          </a>
+          <span class="toolbar-label">Back</span>
+        </div>
+      </aside>
+
+      <div class="settings__content">
+        <div class="settings__header">
+          <h1>Settings</h1>
+        </div>
+        <section aria-labelledby="font-settings-heading">
+          <h2 id="font-settings-heading">Font</h2>
+          <form data-font-form>
+            <fieldset>
+              <legend class="sr-only">Writing font</legend>
+              <ul class="font-options">
+                <li>
+                  <label class="font-option">
+                    <input type="radio" name="writingFont" value="mono" checked>
+                    <span class="font-option__label">
+                      <span class="font-option__name">Monospace</span>
+                      <span class="writing-sample" data-writing-font="mono">All work and no play makes Jack a dull boy</span>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label class="font-option">
+                    <input type="radio" name="writingFont" value="sans">
+                    <span class="font-option__label">
+                      <span class="font-option__name">Sans Serif</span>
+                      <span class="writing-sample" data-writing-font="sans">All work and no play makes Jack a dull boy</span>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label class="font-option">
+                    <input type="radio" name="writingFont" value="serif">
+                    <span class="font-option__label">
+                      <span class="font-option__name">Serif</span>
+                      <span class="writing-sample" data-writing-font="serif">All work and no play makes Jack a dull boy</span>
+                    </span>
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="settings-app.js" defer></script>
 </body>
 </html>
