@@ -2,10 +2,13 @@
   const STORAGE_KEY = 'wastebasket:entry';
   const FONT_STORAGE_KEY = 'wastebasket:font';
   const THEME_STORAGE_KEY = 'wastebasket:theme';
+  const TOOLBAR_STORAGE_KEY = 'wastebasket:toolbar';
   const DEFAULT_WRITING_FONT = 'mono';
   const WRITING_FONTS = new Set(['sans', 'serif', 'mono']);
   const DEFAULT_THEME = 'auto';
   const THEME_OPTIONS = new Set(['auto', 'light', 'dark']);
+  const DEFAULT_TOOLBAR_POSITION = 'bottom';
+  const TOOLBAR_POSITIONS = new Set(['bottom', 'top']);
 
   const textarea = document.getElementById('typeInput');
   const tossBtn = document.getElementById('tossBtn');
@@ -32,6 +35,7 @@
   })();
 
   applyThemePreference(getStoredThemePreference());
+  applyToolbarPreference(getStoredToolbarPreference());
   setWritingFontOnBody(getStoredWritingFont());
 
   if (supportsLocalStorage) {
@@ -170,12 +174,17 @@
     }
     if (event.key === THEME_STORAGE_KEY) {
       handleExternalThemeChange(event.newValue);
+      return;
+    }
+    if (event.key === TOOLBAR_STORAGE_KEY) {
+      handleExternalToolbarChange(event.newValue);
     }
   });
 
   window.addEventListener('pageshow', () => {
     handleExternalFontChange(getStoredWritingFont());
     handleExternalThemeChange(getStoredThemePreference());
+    handleExternalToolbarChange(getStoredToolbarPreference());
   });
 
   focusInput();
@@ -480,6 +489,19 @@
     updateCaretPosition();
   }
 
+  function handleExternalToolbarChange(nextPosition) {
+    const previousPosition = document.documentElement?.dataset.toolbarPosition;
+    applyToolbarPreference(
+      isValidToolbarValue(nextPosition) ? nextPosition : DEFAULT_TOOLBAR_POSITION
+    );
+    const currentPosition = document.documentElement?.dataset.toolbarPosition;
+    if (previousPosition === currentPosition) {
+      return;
+    }
+    lockViewport();
+    updateCaretPosition();
+  }
+
   function getStoredWritingFont() {
     if (!supportsLocalStorage) {
       return DEFAULT_WRITING_FONT;
@@ -494,6 +516,14 @@
     }
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
     return isValidThemeValue(stored) ? stored : DEFAULT_THEME;
+  }
+
+  function getStoredToolbarPreference() {
+    if (!supportsLocalStorage) {
+      return DEFAULT_TOOLBAR_POSITION;
+    }
+    const stored = localStorage.getItem(TOOLBAR_STORAGE_KEY);
+    return isValidToolbarValue(stored) ? stored : DEFAULT_TOOLBAR_POSITION;
   }
 
   function setWritingFontOnBody(fontValue) {
@@ -516,12 +546,28 @@
     }
   }
 
+  function applyToolbarPreference(positionValue) {
+    const nextPosition = isValidToolbarValue(positionValue)
+      ? positionValue
+      : DEFAULT_TOOLBAR_POSITION;
+    if (document.documentElement) {
+      document.documentElement.dataset.toolbarPosition = nextPosition;
+    }
+    if (document.body) {
+      document.body.dataset.toolbarPosition = nextPosition;
+    }
+  }
+
   function isValidFontValue(value) {
     return typeof value === 'string' && WRITING_FONTS.has(value);
   }
 
   function isValidThemeValue(value) {
     return typeof value === 'string' && THEME_OPTIONS.has(value);
+  }
+
+  function isValidToolbarValue(value) {
+    return typeof value === 'string' && TOOLBAR_POSITIONS.has(value);
   }
 
   function escapeHtml(input) {

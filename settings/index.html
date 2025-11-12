@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="auto" data-toolbar-position="bottom">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,22 @@
     (function () {
       try {
         var storedTheme = localStorage.getItem('wastebasket:theme');
-        if (!storedTheme) {
-          return;
+        var storedToolbar = localStorage.getItem('wastebasket:toolbar');
+        if (storedTheme) {
+          document.documentElement.dataset.theme = storedTheme;
         }
-        document.documentElement.dataset.theme = storedTheme;
+        if (storedToolbar) {
+          document.documentElement.dataset.toolbarPosition = storedToolbar;
+        }
         document.addEventListener('DOMContentLoaded', function () {
-          if (document.body) {
+          if (!document.body) {
+            return;
+          }
+          if (storedTheme) {
             document.body.dataset.theme = storedTheme;
+          }
+          if (storedToolbar) {
+            document.body.dataset.toolbarPosition = storedToolbar;
           }
         });
       } catch (error) {
@@ -26,7 +35,7 @@
   </script>
   <link rel="stylesheet" href="../wastebasket-styles.css">
 </head>
-<body data-theme="auto" data-writing-font="mono">
+<body data-theme="auto" data-toolbar-position="bottom" data-writing-font="mono">
   <main class="settings">
     <div class="settings__layout">
       <aside class="settings__sidebar" aria-label="Page navigation">
@@ -121,6 +130,36 @@
               </ul>
             </fieldset>
           </form>
+        </section>
+
+        <section aria-labelledby="toolbar-settings-heading">
+          <h2 id="toolbar-settings-heading" class="settings__section-title">Toolbar</h2>
+          <form data-toolbar-form>
+            <fieldset>
+              <legend class="sr-only">Toolbar position</legend>
+              <ul class="toolbar-options">
+                <li class="toolbar-option">
+                  <input type="radio" name="toolbarPosition" id="toolbar-option-bottom" value="bottom" checked>
+                  <label class="toolbar-option__card" for="toolbar-option-bottom">
+                    <span class="toolbar-option__preview toolbar-option__preview--bottom" aria-hidden="true"></span>
+                    <span class="toolbar-option__name">Bottom</span>
+                  </label>
+                </li>
+                <li class="toolbar-option">
+                  <input type="radio" name="toolbarPosition" id="toolbar-option-top" value="top">
+                  <label class="toolbar-option__card" for="toolbar-option-top">
+                    <span class="toolbar-option__preview toolbar-option__preview--top" aria-hidden="true"></span>
+                    <span class="toolbar-option__name">Top</span>
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </section>
+
+        <section aria-labelledby="more-settings-heading">
+          <h2 id="more-settings-heading" class="settings__section-title"> More</h2>
+          <p>That's it. There is no more. Quit messing with the settings and go write some words.</p>
         </section>
       </div>
     </div>

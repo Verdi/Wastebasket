@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="auto" data-toolbar-position="bottom">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,22 @@
     (function () {
       try {
         var storedTheme = localStorage.getItem('wastebasket:theme');
-        if (!storedTheme) {
-          return;
+        var storedToolbar = localStorage.getItem('wastebasket:toolbar');
+        if (storedTheme) {
+          document.documentElement.dataset.theme = storedTheme;
         }
-        document.documentElement.dataset.theme = storedTheme;
+        if (storedToolbar) {
+          document.documentElement.dataset.toolbarPosition = storedToolbar;
+        }
         document.addEventListener('DOMContentLoaded', function () {
-          if (document.body) {
+          if (!document.body) {
+            return;
+          }
+          if (storedTheme) {
             document.body.dataset.theme = storedTheme;
+          }
+          if (storedToolbar) {
+            document.body.dataset.toolbarPosition = storedToolbar;
           }
         });
       } catch (error) {
@@ -26,7 +35,7 @@
   </script>
   <link rel="stylesheet" href="wastebasket-styles.css">
 </head>
-<body data-theme="auto" data-writing-font="mono">
+<body data-theme="auto" data-toolbar-position="bottom" data-writing-font="mono">
   <main class="workspace">
     <section class="typewriter" aria-live="off">
       <div class="custom-caret" aria-hidden="true"></div>
