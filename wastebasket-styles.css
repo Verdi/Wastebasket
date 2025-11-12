@@ -10,7 +10,15 @@
   --line-height: calc(var(--text-size) * 1.5);
   --visible-rows: 5;
   --fade-overlay-height: calc(var(--line-height) * 2);
-  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-ui-family: system-ui, sans-serif;
+  --font-ui-weight: 400;
+  --font-writing-sans: var(--font-ui-family);
+  --font-writing-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
+  --font-writing-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --font-writing-family: var(--font-writing-mono);
+  --font-writing-weight: 400;
+  font-family: var(--font-ui-family);
+  font-weight: var(--font-ui-weight);
 }
 
 * {
@@ -24,6 +32,21 @@ body {
   color: var(--ink);
   display: flex;
   flex-direction: column;
+}
+
+body[data-writing-font="sans"] {
+  --font-writing-family: var(--font-writing-sans);
+  --font-writing-weight: 400;
+}
+
+body[data-writing-font="serif"] {
+  --font-writing-family: var(--font-writing-serif);
+  --font-writing-weight: 400;
+}
+
+body[data-writing-font="mono"] {
+  --font-writing-family: var(--font-writing-mono);
+  --font-writing-weight: 400;
 }
 
 .workspace {
@@ -100,7 +123,10 @@ textarea {
   padding-bottom: 0.5rem;
   min-height: calc(var(--line-height) * var(--visible-rows) + var(--fade-height) + 0.5rem);
   max-height: calc(var(--line-height) * var(--visible-rows) + var(--fade-height) + 0.5rem);
-  font: var(--text-size)/var(--line-height) var(--system-font, "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace);
+  font-size: var(--text-size);
+  line-height: var(--line-height);
+  font-family: var(--font-writing-family, ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace);
+  font-weight: var(--font-writing-weight, 400);
   background: transparent;
   color: var(--ink);
   caret-color: transparent;
