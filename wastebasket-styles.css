@@ -18,6 +18,8 @@
   --theme-preview-auto: url("settings/auto-light.svg");
   --theme-preview-light: url("settings/light-light.svg");
   --theme-preview-dark: url("settings/dark-light.svg");
+  --toolbar-preview-bottom: url("settings/bottom-light.svg");
+  --toolbar-preview-top: url("settings/top-light.svg");
   --font-ui-family: system-ui, sans-serif;
   --font-ui-weight: 400;
   --font-writing-sans: var(--font-ui-family);
@@ -41,6 +43,8 @@
   --theme-preview-auto: url("settings/auto-dark.svg");
   --theme-preview-light: url("settings/light-dark.svg");
   --theme-preview-dark: url("settings/dark-dark.svg");
+  --toolbar-preview-bottom: url("settings/bottom-dark.svg");
+  --toolbar-preview-top: url("settings/top-dark.svg");
 }
 
 :root[data-theme="light"] {
@@ -190,7 +194,8 @@ fieldset {
   color: var(--ink);
 }
 
-.theme-options {
+.theme-options,
+.toolbar-options {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
@@ -199,18 +204,21 @@ fieldset {
   padding: 0;
 }
 
-.theme-option {
+.theme-option,
+.toolbar-option {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.theme-option input[type="radio"] {
+.theme-option input[type="radio"],
+.toolbar-option input[type="radio"] {
   order: 2;
   margin-top: 0.25rem;
 }
 
-.theme-option__card {
+.theme-option__card,
+.toolbar-option__card {
   order: 1;
   display: flex;
   flex-direction: column;
@@ -220,14 +228,15 @@ fieldset {
   cursor: pointer;
 }
 
-.theme-option__preview {
+.theme-option__preview,
+.toolbar-option__preview {
   display: block;
   width: 180px;
   height: 110px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, border-radius 0.2s ease;
 }
 
 .theme-option__preview--auto {
@@ -242,21 +251,31 @@ fieldset {
   background-image: var(--theme-preview-dark);
 }
 
-.theme-option__name {
+.toolbar-option__preview--bottom {
+  background-image: var(--toolbar-preview-bottom);
+}
+
+.toolbar-option__preview--top {
+  background-image: var(--toolbar-preview-top);
+}
+
+.theme-option__name,
+.toolbar-option__name {
   font-size: 1rem;
   font-weight: 600;
   color: var(--ink);
 }
 
-.theme-option input[type="radio"]:focus-visible + .theme-option__card {
+.theme-option input[type="radio"]:focus-visible + .theme-option__card,
+.toolbar-option input[type="radio"]:focus-visible + .toolbar-option__card {
   outline: 2px solid var(--accent);
   outline-offset: 6px;
 }
 
-.theme-option input[type="radio"]:checked + .theme-option__card .theme-option__preview {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(0, 143, 255, 0.25);
+.theme-option input[type="radio"]:checked + .theme-option__card .theme-option__preview,
+.toolbar-option input[type="radio"]:checked + .toolbar-option__card .toolbar-option__preview {
   border-radius: 12px;
+  box-shadow: 0 0 0 2px rgba(0, 143, 255, 0.25);
 }
 
 @media (max-width: 720px) {
@@ -371,6 +390,14 @@ textarea::-webkit-scrollbar {
   border-top: 1px solid var(--toolbar-border);
   backdrop-filter: blur(8px);
   transition: opacity 0.35s ease;
+}
+
+[data-toolbar-position="top"] .toolbar {
+  top: 0;
+  bottom: auto;
+  padding: 1rem clamp(1rem, 4vw, 3rem) 3.5rem;
+  border-top: none;
+  border-bottom: 1px solid var(--toolbar-border);
 }
 
 .toolbar.is-hidden {
@@ -489,6 +516,11 @@ textarea::-webkit-scrollbar {
   .workspace {
     padding-bottom: calc(var(--toolbar-height) + 3.5rem);
   }
+
+  [data-toolbar-position="top"] .workspace {
+    padding-top: calc(clamp(1.5rem, 5vw, 4rem) + var(--toolbar-height) + 3.5rem);
+    padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -504,5 +536,7 @@ textarea::-webkit-scrollbar {
     --theme-preview-auto: url("settings/auto-dark.svg");
     --theme-preview-light: url("settings/light-dark.svg");
     --theme-preview-dark: url("settings/dark-dark.svg");
+    --toolbar-preview-bottom: url("settings/bottom-dark.svg");
+    --toolbar-preview-top: url("settings/top-dark.svg");
   }
 }
