@@ -112,7 +112,7 @@
     }
     try {
       await navigator.clipboard.writeText(text);
-      setStatus('Copied.');
+      setStatus('Copied!');
       scheduleStatusClear();
     } catch (error) {
       fallbackCopy();
@@ -140,8 +140,6 @@
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    setStatus('Plain text saved.');
-    scheduleStatusClear();
     focusInput();
     updateButtonState();
   });
@@ -219,10 +217,16 @@
 
   function setStatus(message) {
     status.textContent = message;
+    if (message) {
+      status.classList.add('is-visible');
+    } else {
+      status.classList.remove('is-visible');
+    }
   }
 
   function clearStatus() {
     status.textContent = '';
+    status.classList.remove('is-visible');
   }
 
   function scheduleStatusClear() {
@@ -254,7 +258,16 @@
     }
     const active = Boolean(document.fullscreenElement);
     fullscreenBtn.setAttribute('aria-pressed', String(active));
-    fullscreenBtn.textContent = active ? 'Exit Fullscreen' : 'Fullscreen';
+    const enterIcon = fullscreenBtn.querySelector('[data-icon="enter"]');
+    const exitIcon = fullscreenBtn.querySelector('[data-icon="exit"]');
+    if (enterIcon && exitIcon) {
+      enterIcon.hidden = active;
+      exitIcon.hidden = !active;
+    }
+    const label = fullscreenBtn.querySelector('.toolbar-action__label');
+    if (label) {
+      label.textContent = active ? 'Exit' : 'Fullscreen';
+    }
     focusInput();
   }
 

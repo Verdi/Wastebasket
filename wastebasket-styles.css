@@ -1,6 +1,7 @@
 :root {
   color-scheme: light;
-  --ink: #111;
+  --ink: #1E1E1E;
+  --surface: #F8F8F8;
   --muted: #868686;
   --accent: #008FFF;
   --toolbar-height: 72px;
@@ -19,7 +20,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
   display: flex;
   flex-direction: column;
@@ -84,9 +85,9 @@ body {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    #fff 0,
-    #fff calc(var(--fade-overlay-height) / 2),
-    rgba(255, 255, 255, 0) var(--fade-overlay-height)
+    var(--surface) 0,
+    var(--surface) calc(var(--fade-overlay-height) / 2),
+    rgba(248, 248, 248, 0) var(--fade-overlay-height)
   );
 }
 
@@ -115,16 +116,6 @@ textarea::-webkit-scrollbar {
   height: 0;
 }
 
-.status {
-  min-height: 1.25rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-top: 1rem;
-  text-align: center;
-}
-
 .toolbar {
   position: fixed;
   left: 0;
@@ -134,10 +125,10 @@ textarea::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.75rem;
+  gap: 44px;
   padding: 1rem clamp(1rem, 4vw, 3rem);
-  background: rgba(255, 255, 255, 0.95);
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(248, 248, 248, 0.95);
+  border-top: 1px solid #E4E4E4;
   backdrop-filter: blur(8px);
   transition: opacity 0.35s ease;
 }
@@ -147,47 +138,98 @@ textarea::-webkit-scrollbar {
   pointer-events: none;
 }
 
-button {
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  padding: 0.85rem 1.6rem;
-  font: inherit;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  background: #fff;
-  color: #111;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+.toolbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
 }
 
-button:disabled {
+.toolbar-item--copy {
+  position: relative;
+}
+
+.status {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -20px);
+  padding: 0.35rem 0.9rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.status.is-visible {
+  opacity: 1;
+}
+
+.toolbar-action {
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.2rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  background: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.toolbar-action:disabled {
   opacity: 0.5;
   cursor: default;
   pointer-events: none;
-  box-shadow: none;
-  background: #fff;
-  color: #111;
+  background: none;
+  color: var(--ink);
 }
 
-button.secondary {
-  background: #fff;
-  color: #111;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
-}
-
-button:hover,
-button:focus-visible {
-  background: #111;
-  color: #fff;
-}
-
-
-
-button:active {
+.toolbar-action:not(:disabled):active {
   transform: translateY(1px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toolbar-action__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 4px;
+  transition: background 0.2s ease;
+}
+
+.toolbar-action__icon svg {
+  width: 32px;
+  height: 33px;
+  display: block;
+  fill: currentColor;
+}
+
+.toolbar-action__icon[hidden] {
+  display: none;
+}
+
+.toolbar-action:not(:disabled):hover .toolbar-action__icon,
+.toolbar-action:not(:disabled):focus-visible .toolbar-action__icon,
+.toolbar-action:not(:disabled):active .toolbar-action__icon {
+  background: #E4E4E4;
+}
+
+.toolbar-action__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 560px) {
@@ -205,54 +247,51 @@ button:active {
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --accent: #1A9AFF;
+    --accent: #008FFF;
+    --ink: #F8F8F8;
+    --surface: #1E1E1E;
   }
 
   body {
-    background: #000;
-    color: #fff;
+    background: var(--surface);
+    color: var(--ink);
   }
 
   textarea {
-    color: #fff;
+    color: var(--ink);
   }
 
   .status {
-    color: #bcbcbc;
+    color: #d9d9d9;
   }
 
   .typewriter::before {
     background: linear-gradient(
       180deg,
-      #000 0,
-      #000 calc(var(--fade-overlay-height) / 2),
-      rgba(0, 0, 0, 0) var(--fade-overlay-height)
+      var(--surface) 0,
+      var(--surface) calc(var(--fade-overlay-height) / 2),
+      rgba(30, 30, 30, 0) var(--fade-overlay-height)
     );
   }
 
   .toolbar {
-    background: rgba(0, 0, 0, 0.85);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(30, 30, 30, 0.9);
+    border-top: 1px solid #505050;
   }
 
-  button,
-  button.secondary {
-    background: #000;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  .toolbar-action {
+    border: none;
+    box-shadow: none;
+    color: var(--ink);
   }
 
-  button:hover,
-  button:focus-visible {
-    background: #fff;
-    color: #000;
+  .toolbar-action__icon {
+    fill: currentColor;
   }
 
-  button:disabled {
-    background: #000;
-    color: #fff;
-    opacity: 0.5;
+  .toolbar-action:not(:disabled):hover .toolbar-action__icon,
+  .toolbar-action:not(:disabled):focus-visible .toolbar-action__icon,
+  .toolbar-action:not(:disabled):active .toolbar-action__icon {
+    background: #505050;
   }
-
 }
