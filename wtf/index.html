@@ -1,14 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto" data-toolbar-position="bottom">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wastebasket - WTF?</title>
   <link rel="icon" href="../wastebasket-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="../wastebasket-512.png" sizes="512x512">
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('wastebasket:theme');
+        var storedToolbar = localStorage.getItem('wastebasket:toolbar');
+        if (storedTheme) {
+          document.documentElement.dataset.theme = storedTheme;
+        }
+        if (storedToolbar) {
+          document.documentElement.dataset.toolbarPosition = storedToolbar;
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+          if (!document.body) {
+            return;
+          }
+          if (storedTheme) {
+            document.body.dataset.theme = storedTheme;
+          }
+          if (storedToolbar) {
+            document.body.dataset.toolbarPosition = storedToolbar;
+          }
+          try {
+            localStorage.setItem('wastebasket:wtfSeen', '1');
+          } catch (error) {
+            /* ignore */
+          }
+        });
+      } catch (error) {
+        /* localStorage unavailable */
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="../wastebasket-styles.css">
 </head>
-<body>
-    <h1>Wastebasket WTF?</h1>
+<body data-theme="auto" data-toolbar-position="bottom" data-writing-font="mono">
+  <main class="settings">
+    <div class="settings__layout">
+      <aside class="settings__sidebar" aria-label="Page navigation">
+        <div class="toolbar-item toolbar-item--back">
+          <a class="toolbar-action" href="../index.html" aria-label="Back to writing surface">
+            <span class="toolbar-action__icon" aria-hidden="true">
+              <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_335_836)">
+                  <path d="M21.1699 28.3243C21.0383 28.325 20.9078 28.2995 20.786 28.249C20.6641 28.1986 20.5533 28.1243 20.4599 28.0303L12.2899 19.75C11.8243 19.2793 11.4548 18.72 11.2028 18.1044C10.9507 17.4887 10.8209 16.8287 10.8209 16.1622C10.8209 15.4956 10.9507 14.8356 11.2028 14.2199C11.4548 13.6043 11.8243 13.0451 12.2899 12.5743L20.4599 4.29399C20.5531 4.19949 20.6638 4.12453 20.7856 4.07339C20.9075 4.02225 21.038 3.99593 21.1699 3.99593C21.3017 3.99593 21.4323 4.02225 21.5541 4.07339C21.676 4.12453 21.7866 4.19949 21.8799 4.29399C21.9731 4.38849 22.0471 4.50067 22.0975 4.62414C22.148 4.74761 22.174 4.87994 22.174 5.01358C22.174 5.14722 22.148 5.27955 22.0975 5.40302C22.0471 5.52649 21.9731 5.63867 21.8799 5.73317L13.7099 14.0135C13.1481 14.5836 12.8325 15.3564 12.8325 16.1622C12.8325 16.9679 13.1481 17.7407 13.7099 18.3108L21.8799 26.5912C21.9736 26.6854 22.048 26.7975 22.0988 26.921C22.1495 27.0445 22.1757 27.177 22.1757 27.3108C22.1757 27.4446 22.1495 27.577 22.0988 27.7005C22.048 27.824 21.9736 27.9361 21.8799 28.0303C21.7864 28.1243 21.6756 28.1986 21.5538 28.249C21.432 28.2995 21.3015 28.325 21.1699 28.3243Z" fill="currentColor"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_335_836">
+                    <rect width="24" height="24.3242" fill="none" transform="translate(4 4)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </span>
+          </a>
+          <span class="toolbar-label">Back</span>
+        </div>
+      </aside>
+
+      <div class="settings__content">
+        <div class="settings__header">
+          <h1>WTF Is This App?</h1>
+        </div>
+
+        <section class="wtf-copy">
+          <p>Wastebasket is an app for drafting, not editing. It's here so you can get the words down without distraction. There's no spelling or grammar checking. There are no AI writing tools. Wastebasket can hardly do anything. You can't even copy and paste. That's on purpose.</p>
+          <p>To use Wastebasket, just start typing. Nobody cares if you make a mistake. Just hit enter once or twice and keep going. You can fix it later. When you're done writing, there's a copy button that copies everything you've written so you can paste it somewhere else (I like Obsidian). If you want, you can also save a plain text file to your device. Don't like what you wrote or want to start again? Toss the current draft in the wastebasket. That's about it.</p>
+          <p>By the way, this website doesn't store anything in the clould. Everything you write is stored on your device by your browser. If you quit the app, turn off your computer and come back later it should still be there but no promises. Save those words if you think you might want them later.</p>
+          <p>This app also works offline so you can use it on an airplane or one of those places that Instagram people go where there's no wifi.</p>
+          <p>There are analytics (they from XXX not Google) that I collect but I'm not tracking you, I don't know who you are and I don't have any idea what you're writing. I do this so I can see how many people are using the app and whether there seems to be any problems. This app also doesn't use any remotely hosted fonts or other resources.</p>
+          <p>Do you want to see this thing in action? Check out this video!<br>
+          (video goes here)</p>
+          <p>Got somethign to say? Send me an email. Want to chip in a couple of bucks to support this app? You can do that here.</p>
+          <h3 id="terms-of-service">Terms of Service</h3>
+          <ul>
+            <li>Anyone, except Nazis, can use this website. If you're a Nazi, 1. Fuck off and 2. use of this website is prohibited.</li>
+            <li>Add more terms...</li>
+          </ul>
+          <p>Okay, now for the love of god, quit reading this and go write something already.</p>
+          <p>Michael Verdi</p>
+        </section>
+      </div>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
