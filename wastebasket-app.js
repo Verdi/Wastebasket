@@ -3,6 +3,7 @@
   const FONT_STORAGE_KEY = 'wastebasket:font';
   const THEME_STORAGE_KEY = 'wastebasket:theme';
   const TOOLBAR_STORAGE_KEY = 'wastebasket:toolbar';
+  const WTF_HINT_STORAGE_KEY = 'wastebasket:wtfSeen';
   const DEFAULT_WRITING_FONT = 'mono';
   const WRITING_FONTS = new Set(['sans', 'serif', 'mono']);
   const DEFAULT_THEME = 'auto';
@@ -18,6 +19,8 @@
   const fullscreenBtn = document.getElementById('fullscreenBtn');
   const toolbar = document.querySelector('.toolbar');
   const customCaret = document.querySelector('.custom-caret');
+  const wtfHint = document.getElementById('wtfHint');
+  const wtfLink = document.getElementById('wtfLink');
 
   let text = '';
   let toolbarHidden = false;
@@ -37,6 +40,7 @@
   applyThemePreference(getStoredThemePreference());
   applyToolbarPreference(getStoredToolbarPreference());
   setWritingFontOnBody(getStoredWritingFont());
+  maybeShowWtfHint();
 
   if (supportsLocalStorage) {
     text = localStorage.getItem(STORAGE_KEY) || '';
@@ -96,6 +100,12 @@
   ['pointermove', 'pointerdown', 'touchstart'].forEach((eventName) => {
     document.addEventListener(eventName, revealToolbarOnPointer, { passive: true });
   });
+
+  if (wtfLink) {
+    wtfLink.addEventListener('click', () => {
+      markWtfHintSeen();
+    });
+  }
 
   tossBtn.addEventListener('click', () => {
     if (!text) {
@@ -406,6 +416,28 @@
     }
     toolbarHidden = true;
     toolbar.classList.add('is-hidden');
+  }
+
+  function maybeShowWtfHint() {
+    if (!wtfHint) {
+      return;
+    }
+    if (!supportsLocalStorage) {
+      wtfHint.classList.add('is-visible');
+      return;
+    }
+    const hasSeen = localStorage.getItem(WTF_HINT_STORAGE_KEY) === '1';
+    wtfHint.classList.toggle('is-visible', !hasSeen);
+  }
+
+  function markWtfHintSeen() {
+    if (!wtfHint) {
+      return;
+    }
+    wtfHint.classList.remove('is-visible');
+    if (supportsLocalStorage) {
+      localStorage.setItem(WTF_HINT_STORAGE_KEY, '1');
+    }
   }
 
   function revealToolbarOnPointer() {

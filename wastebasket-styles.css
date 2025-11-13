@@ -27,6 +27,7 @@
   --font-writing-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   --font-writing-family: var(--font-writing-mono);
   --font-writing-weight: 400;
+  --writing-sample-color: #707070;
   font-family: var(--font-ui-family);
   font-weight: var(--font-ui-weight);
 }
@@ -45,6 +46,7 @@
   --theme-preview-dark: url("settings/dark-dark.svg");
   --toolbar-preview-bottom: url("settings/bottom-dark.svg");
   --toolbar-preview-top: url("settings/top-dark.svg");
+  --writing-sample-color: #858585;
 }
 
 :root[data-theme="light"] {
@@ -151,6 +153,19 @@ body {
 .settings__section-title {
   margin-bottom: 0.5rem;
   font-size: 1.75rem;
+}
+
+.wtf-copy {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.wtf-copy ul {
+  margin: 0;
+  padding-left: 1.25rem;
 }
 
 fieldset {
@@ -297,6 +312,11 @@ fieldset {
   font-family: var(--font-writing-family, ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace);
   font-weight: var(--font-writing-weight, 400);
   color: var(--ink);
+  opacity: 0.62;
+}
+
+[data-theme="dark"] .writing-sample {
+  opacity: 0.47;
 }
 
 .custom-caret {
@@ -416,6 +436,44 @@ textarea::-webkit-scrollbar {
   position: relative;
 }
 
+.toolbar-item--wtf {
+  position: relative;
+}
+
+.onboarding-hint {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.onboarding-hint::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 7px 0 7px;
+  border-style: solid;
+  border-color: var(--accent) transparent transparent transparent;
+}
+
+.onboarding-hint.is-visible {
+  opacity: 1;
+}
+
 .status {
   position: absolute;
   bottom: 100%;
@@ -456,11 +514,15 @@ textarea::-webkit-scrollbar {
 }
 
 .toolbar-action:disabled {
-  opacity: 0.5;
+  opacity: 0.62;
   cursor: default;
   pointer-events: none;
   background: none;
   color: var(--ink);
+}
+
+[data-theme="dark"] .toolbar-action:disabled {
+  opacity: 0.47;
 }
 
 .toolbar-action:not(:disabled):active {
@@ -538,5 +600,26 @@ textarea::-webkit-scrollbar {
     --theme-preview-dark: url("settings/dark-dark.svg");
     --toolbar-preview-bottom: url("settings/bottom-dark.svg");
     --toolbar-preview-top: url("settings/top-dark.svg");
+    --writing-sample-color: #858585;
   }
+
+  :root:not([data-theme="light"]) body .writing-sample {
+    opacity: 0.47;
+  }
+
+  :root:not([data-theme="light"]) body .toolbar-action:disabled {
+    opacity: 0.47;
+  }
+}
+[data-toolbar-position="top"] .toolbar-item--wtf .onboarding-hint {
+  top: calc(100% + 0.5rem);
+  bottom: auto;
+  transform: translate(-50%, 0);
+}
+
+[data-toolbar-position="top"] .toolbar-item--wtf .onboarding-hint::after {
+  top: auto;
+  bottom: 100%;
+  border-width: 0 7px 8px 7px;
+  border-color: transparent transparent var(--accent) transparent;
 }
