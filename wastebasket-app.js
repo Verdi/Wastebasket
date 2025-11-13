@@ -41,6 +41,8 @@
   applyToolbarPreference(getStoredToolbarPreference());
   setWritingFontOnBody(getStoredWritingFont());
   maybeShowWtfHint();
+  registerServiceWorker();
+  suppressInstallPrompt();
 
   if (supportsLocalStorage) {
     text = localStorage.getItem(STORAGE_KEY) || '';
@@ -438,6 +440,23 @@
     if (supportsLocalStorage) {
       localStorage.setItem(WTF_HINT_STORAGE_KEY, '1');
     }
+  }
+
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .catch((error) => console.warn('SW registration failed', error));
+    });
+  }
+
+  function suppressInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+    });
   }
 
   function revealToolbarOnPointer() {
