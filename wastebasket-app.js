@@ -21,6 +21,9 @@
   const customCaret = document.querySelector('.custom-caret');
   const wtfHint = document.getElementById('wtfHint');
   const wtfLink = document.getElementById('wtfLink');
+  const tossIcon = document.querySelector('.toolbar-item--toss .toolbar-action__icon');
+  const tossAnimationContainer = tossIcon?.querySelector('.toss-animation');
+  const tossAnimationTemplate = document.getElementById('tossAnimationTemplate');
 
   let text = '';
   let toolbarHidden = false;
@@ -126,6 +129,7 @@
     focusInput();
     clearStatus();
     updateButtonState();
+    playTossAnimation();
   });
 
   copyBtn.addEventListener('click', async () => {
@@ -440,6 +444,25 @@
     if (supportsLocalStorage) {
       localStorage.setItem(WTF_HINT_STORAGE_KEY, '1');
     }
+  }
+
+  function playTossAnimation() {
+    if (!tossAnimationContainer || !tossIcon || !tossAnimationTemplate) {
+      return;
+    }
+    const svg = tossAnimationTemplate.content.firstElementChild;
+    if (!svg) {
+      return;
+    }
+    tossAnimationContainer.innerHTML = '';
+    tossAnimationContainer.appendChild(svg.cloneNode(true));
+    tossAnimationContainer.classList.add('is-visible');
+    tossIcon.classList.add('is-animating');
+    setTimeout(() => {
+      tossAnimationContainer.classList.remove('is-visible');
+      tossIcon.classList.remove('is-animating');
+      tossAnimationContainer.innerHTML = '';
+    }, 1000);
   }
 
   function registerServiceWorker() {

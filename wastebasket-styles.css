@@ -436,6 +436,105 @@ textarea::-webkit-scrollbar {
   position: relative;
 }
 
+.toss-animation {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toss-animation svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+  color: var(--ink);
+}
+
+.toss-animation svg path {
+  opacity: 0;
+}
+
+@keyframes toss-frame-one {
+  0% { opacity: 1; }
+  10% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes toss-frame-two {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  20% { opacity: 0; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-three {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  30% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-four {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-five {
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-six {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  60% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-seven {
+  0% { opacity: 0; }
+  60% { opacity: 1; }
+  70% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-eight {
+  0% { opacity: 0; }
+  70% { opacity: 1; }
+  80% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes toss-frame-nine {
+  0% { opacity: 0; }
+  80% { opacity: 1; }
+  90% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.toss-animation svg #one { animation: 1s steps(1, end) forwards toss-frame-one; }
+.toss-animation svg #two { animation: 1s steps(1, end) forwards toss-frame-two; }
+.toss-animation svg #three { animation: 1s steps(1, end) forwards toss-frame-three; }
+.toss-animation svg #four { animation: 1s steps(1, end) forwards toss-frame-four; }
+.toss-animation svg #five { animation: 1s steps(1, end) forwards toss-frame-five; }
+.toss-animation svg #six { animation: 1s steps(1, end) forwards toss-frame-six; }
+.toss-animation svg #seven { animation: 1s steps(1, end) forwards toss-frame-seven; }
+.toss-animation svg #eight { animation: 1s steps(1, end) forwards toss-frame-eight; }
+.toss-animation svg #nine { animation: 1s steps(1, end) forwards toss-frame-nine; }
+
+.toss-animation.is-visible {
+  opacity: 1;
+}
+
 .toolbar-item--wtf {
   position: relative;
 }
@@ -535,7 +634,8 @@ textarea::-webkit-scrollbar {
   justify-content: center;
   border-radius: 6px;
   padding: 4px;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, opacity 0.3s ease;
+  position: relative;
 }
 
 .toolbar-action__icon svg {
@@ -547,6 +647,14 @@ textarea::-webkit-scrollbar {
 
 .toolbar-action__icon[hidden] {
   display: none;
+}
+
+.toolbar-action__icon.is-animating {
+  opacity: 1;
+}
+
+.toolbar-action__icon.is-animating > svg {
+  opacity: 0;
 }
 
 .toolbar-action:not(:disabled):hover .toolbar-action__icon,
