@@ -16,7 +16,7 @@
   const copyBtn = document.getElementById('copyBtn');
   const saveBtn = document.getElementById('saveBtn');
   const status = document.getElementById('status');
-  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  let fullscreenBtn = document.getElementById('fullscreenBtn');
   const toolbar = document.querySelector('.toolbar');
   const customCaret = document.querySelector('.custom-caret');
   const wtfHint = document.getElementById('wtfHint');
@@ -24,6 +24,12 @@
   const tossIcon = document.querySelector('.toolbar-item--toss .toolbar-action__icon');
   const tossAnimationContainer = tossIcon?.querySelector('.toss-animation');
   const tossAnimationTemplate = document.getElementById('tossAnimationTemplate');
+  const fullscreenSupported = isFullscreenSupported();
+
+  if (!fullscreenSupported && fullscreenBtn) {
+    fullscreenBtn.closest('.toolbar-item')?.remove();
+    fullscreenBtn = null;
+  }
 
   let text = '';
   let toolbarHidden = false;
@@ -173,8 +179,10 @@
     updateButtonState();
   });
 
-  fullscreenBtn.addEventListener('click', toggleFullscreen);
-  document.addEventListener('fullscreenchange', syncFullscreenState);
+  if (fullscreenBtn && fullscreenSupported) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', syncFullscreenState);
+  }
 
   window.addEventListener('resize', () => {
     syncMirrorDimensions();
@@ -204,7 +212,9 @@
   });
 
   focusInput();
-  syncFullscreenState();
+  if (fullscreenBtn && fullscreenSupported) {
+    syncFullscreenState();
+  }
   lockViewport();
   updateCaretPosition();
   updateButtonState();
@@ -319,6 +329,14 @@
       label.textContent = active ? 'Exit' : 'Fullscreen';
     }
     focusInput();
+  }
+  function isFullscreenSupported() {
+    return Boolean(
+      document.fullscreenEnabled ||
+        document.webkitFullscreenEnabled ||
+        document.mozFullScreenEnabled ||
+        document.msFullscreenEnabled
+    );
   }
 
   function getComputedPadding(property) {

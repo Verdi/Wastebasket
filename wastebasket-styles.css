@@ -146,6 +146,10 @@ body {
   margin-bottom: 2.25rem;
 }
 
+.settings__header--wtf {
+  margin-bottom: 0;
+}
+
 .settings section + section {
   margin-top: 2.5rem;
 }
@@ -161,6 +165,19 @@ body {
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--ink);
+}
+
+.wtf-copy h2 {
+  margin-bottom: 0;
+}
+
+.wtf-copy h3 {
+  margin-top: 3.25rem;
+  margin-bottom: 0;
+}
+
+.wtf-copy p {
+  margin-bottom: 0;
 }
 
 .wtf-copy ul {
@@ -674,6 +691,12 @@ textarea::-webkit-scrollbar {
   color: var(--ink);
   white-space: nowrap;
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    gap: clamp(22px, 6vw, 50px);
+  }
 }
 
 @media (max-width: 560px) {
