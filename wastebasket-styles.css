@@ -546,7 +546,7 @@ textarea::-webkit-scrollbar {
   transform: translateX(-50%);
   padding: 1rem;
   border-radius: 6px;
-  background: var(--accent);
+  background: #006cd1;
   color: #fff;
   font-weight: 600;
   font-size: 0.95rem;
@@ -566,7 +566,7 @@ textarea::-webkit-scrollbar {
   transform: translateX(-50%);
   border-width: 8px 7px 0 7px;
   border-style: solid;
-  border-color: var(--accent) transparent transparent transparent;
+  border-color: #006cd1 transparent transparent transparent;
 }
 
 .onboarding-hint.is-visible {
