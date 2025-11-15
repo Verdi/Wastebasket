@@ -147,7 +147,7 @@ body {
 }
 
 .settings__header--wtf {
-  margin-bottom: 0;
+  margin-bottom: 1.5rem;
 }
 
 .settings section + section {
