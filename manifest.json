@@ -1,7 +1,7 @@
 {
   "name": "Wastebasket",
   "short_name": "Wastebasket",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#F8F8F8",
   "theme_color": "#F8F8F8",

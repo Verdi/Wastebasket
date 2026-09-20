@@ -483,13 +483,17 @@
     }, 1000);
   }
 
+
   function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) {
       return;
     }
     window.addEventListener('load', () => {
+      // Relative, not '/service-worker.js'. GitHub Pages serves this from
+      // /Wastebasket/, where an absolute path reaches one directory too high
+      // and the registration simply fails.
       navigator.serviceWorker
-        .register('/service-worker.js')
+        .register('service-worker.js')
         .catch((error) => console.warn('SW registration failed', error));
     });
   }
