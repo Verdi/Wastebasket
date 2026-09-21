@@ -6,6 +6,8 @@ No spell check, no grammar check, no AI, no formatting. You can't even make some
 
 [Use it on the web](https://verdi.github.io/Wastebasket/)
 
+**A Mac app is coming.** Same idea, except it can actually switch your Mac's network off while you write — Wi-Fi, Ethernet, all of it. Turn your laptop into an offline writing device, and back into your laptop when you're done. [wastebasket.app](https://wastebasket.app)
+
 ## How it works
 
 Everything you type is saved by your browser, on your device, in `localStorage`. There is no account, no server, and no storage backend. Nothing you write is ever uploaded, because there is nowhere for it to go.
